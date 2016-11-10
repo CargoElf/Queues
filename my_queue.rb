@@ -4,6 +4,7 @@ class MyQueue
 
   def initialize
     @queue = nil
+    @size = 0
   end
 
   def enqueue(element)
@@ -12,6 +13,7 @@ class MyQueue
     else
       @queue.link(Queue.new(element))
     end
+    increment_size
   end
 
   def dequeue
@@ -21,6 +23,13 @@ class MyQueue
   end
 
   def empty?
+    @size < 1
+  end
+
+  private
+
+  def increment_size
+    @size += 1
   end
 
 end
