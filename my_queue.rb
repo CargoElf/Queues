@@ -1,25 +1,41 @@
 require_relative "queue"
 
+#need to know the first and last
+#last in links to the pervious last in
+
+
 class MyQueue
 
   def initialize
-    @queue = nil
+    @first = nil
+    @last = nil
     @size = 0
   end
 
   def enqueue(element)
-    if @queue == nil
-      @queue = Queue.new(element)
+    if empty?
+      @first = Queue.new(element)
+      @last = @first
     else
-      @queue.link(Queue.new(element))
+      new_queue_item = Queue.new(element)
+      @last.next_link(new_queue_item)
+      new_queue_item.previous_link(@last)
+      @last = new_queue_item
     end
     increment_size
   end
 
   def dequeue
+    return nil if empty?
+    to_dequeue = self.peel
+    @first = @first.next
+    decriment_size
+    to_dequeue
   end
 
   def peel
+    return nil if empty?
+    @first.element
   end
 
   def empty?
@@ -30,6 +46,10 @@ class MyQueue
 
   def increment_size
     @size += 1
+  end
+
+  def decriment_size
+    @size -= 1
   end
 
 end
